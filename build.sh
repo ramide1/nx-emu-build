@@ -23,7 +23,7 @@ case "$emu_version" in
         echo "Cloning Torzu..."
         git clone --depth 1 https://notabug.org/litucks/torzu.git && echo "Torzu cloned correctly" || { echo "error cloning Torzu"; rm -rf "$emu_directory"; exit 1; }
         cd torzu
-        git submodule update --init --recursive && echo "submodules updated correctly" || { echo "error updating submodules"; cd ..; rm -rf "$emu_directory"; exit 1; }
+        git submodule update --init --recursive && echo "submodules updated correctly" || { echo "error updating submodules"; cd .. && rm -rf "$emu_directory"; exit 1; }
         cd ..
         ;;
 esac
@@ -79,7 +79,7 @@ case "$emu_platform" in
                             -DUSE_DISCORD_PRESENCE=OFF \
                             -DBUNDLE_SPEEX=ON \
                             -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                     2)
                         cmake .. -GNinja \
@@ -93,7 +93,7 @@ case "$emu_platform" in
                             -DUSE_DISCORD_PRESENCE=OFF \
                             -DBUNDLE_SPEEX=ON \
                             -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                     3)
                         cmake .. -GNinja \
@@ -107,7 +107,7 @@ case "$emu_platform" in
                             -DUSE_DISCORD_PRESENCE=OFF \
                             -DBUNDLE_SPEEX=ON \
                             -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                     4)
                         cmake .. -GNinja \
@@ -120,7 +120,7 @@ case "$emu_platform" in
                             -DCMAKE_CXX_FLAGS="-march=native -mtune=native -Wno-error" \
                             -DCMAKE_C_FLAGS="-march=native -mtune=native" \
                             -DUSE_DISCORD_PRESENCE=OFF \
-                            -DBUNDLE_SPEEX=ON && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                            -DBUNDLE_SPEEX=ON && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                 esac
                 ;;
@@ -137,24 +137,24 @@ case "$emu_platform" in
                 fi
                 case "$emu_build_mode" in
                     1)
-                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                     2)
-                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF -DYUZU_USE_LLVM_DEMANGLE=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF -DYUZU_USE_LLVM_DEMANGLE=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                     3)
-                        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || { echo "error building cmake"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                         ;;
                 esac
                 ;;
         esac
         echo "Building bin..."
-        ninja && echo "bin builded correctly" || { echo "error building bin"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+        ninja && echo "bin builded correctly" || { echo "error building bin"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
         echo "Building appimage..."
         case "$emu_version" in
             1)
-                cd .. && ./appimage-builder.sh citron build && echo "appimage builded correctly" || { echo "error building appimage"; cd ~/; rm -rf "$emu_directory"; exit 1; }
-                chmod +x build/deploy-linux/citron-nightly-*-x86_64.AppImage && echo "permissions updated correctly" || { echo "error updating permissions"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                cd .. && ./appimage-builder.sh citron build && echo "appimage builded correctly" || { echo "error building appimage"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
+                chmod +x build/deploy-linux/citron-nightly-*-x86_64.AppImage && echo "permissions updated correctly" || { echo "error updating permissions"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                 mv build/deploy-linux/citron-nightly-*-x86_64.AppImage ~/
                 ;;
             2)
@@ -174,9 +174,9 @@ case "$emu_platform" in
                 StartupWMClass=yuzu' > ./torzu.desktop
                 cd ..
                 echo "Installing wget..."
-                sudo pacman -Syu --needed --noconfirm wget && echo "wget installed correctly" || { echo "error installing wget"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                sudo pacman -Syu --needed --noconfirm wget && echo "wget installed correctly" || { echo "error installing wget"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                 cd .. && wget https://git.citron-emu.org/Citron/Citron/raw/branch/master/appimage-builder.sh
-                chmod +x appimage-builder.sh && ./appimage-builder.sh torzu build && echo "appimage builded correctly" || { echo "error building appimage"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+                chmod +x appimage-builder.sh && ./appimage-builder.sh torzu build && echo "appimage builded correctly" || { echo "error building appimage"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
                 mv build/deploy-linux/torzu*-x86_64.AppImage ~/
                 ;;
         esac
@@ -211,7 +211,7 @@ case "$emu_platform" in
         cd "$emu_directory/src/android"
         echo "Building apk..."
         yes | sdkmanager --licenses
-        ./gradlew assembleRelease && echo "apk builded correctly" || { echo "error building apk"; cd ~/; rm -rf "$emu_directory"; exit 1; }
+        ./gradlew assembleRelease && echo "apk builded correctly" || { echo "error building apk"; cd ~/ && rm -rf "$emu_directory"; exit 1; }
         rm -rf ~/Android
         rm -rf ~/jdk-21.0.6+7
         case "$emu_version" in
