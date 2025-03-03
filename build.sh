@@ -117,9 +117,6 @@ case "$emu_platform" in
         cd "$emu_directory/src/android"
         echo "Building apk..."
         yes | sdkmanager --licenses
-        if [ "$emu_version" == "1" ]; then
-            sdkmanager "cmake;3.31.5"
-        fi
         ./gradlew assembleRelease && echo "apk builded correctly" || echo "error building apk"
         rm -rf ~/Android
         rm -rf ~/jdk-21.0.6+7
