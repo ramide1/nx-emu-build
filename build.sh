@@ -47,7 +47,7 @@ case "$emu_platform" in
             2)
                 echo "Installing qt5..."
                 sudo pacman -Syu --needed --noconfirm qt5 && echo "qt5 installed correctly" || echo "error installing qt5"
-                rm -rf torzu*-x86_64.AppImage
+                rm -rf torzu-x86_64
                 ;;
         esac
         cd "$emu_directory"
@@ -158,28 +158,7 @@ case "$emu_platform" in
                 mv build/deploy-linux/citron-nightly-*-x86_64.AppImage ~/
                 ;;
             2)
-                mkdir -p deploy-linux/AppDir
-                echo '[Desktop Entry]
-                Version=1.0
-                Type=Application
-                Name=torzu
-                GenericName=Switch Emulator
-                Comment=Nintendo Switch video game console emulator
-                Icon=torzu
-                TryExec=yuzu
-                Exec=yuzu %f
-                Categories=Game;Emulator;Qt;
-                MimeType=application/x-nx-nro;application/x-nx-nso;application/x-nx-nsp;application/x-nx-xci;
-                Keywords=Nintendo;Switch;
-                StartupWMClass=yuzu' > ./deploy-linux/AppDir/torzu.desktop
-                echo "Installing wget..."
-                sudo pacman -Syu --needed --noconfirm wget && echo "wget installed correctly" || echo "error installing wget"
-                cd .. && wget https://git.citron-emu.org/Citron/Citron/raw/branch/master/appimage-builder.sh
-                sed -i 's|export EXTRA_QT_PLUGINS="svg;wayland-decoration-client;wayland-graphics-integration-client;wayland-shell-integration;waylandcompositor;xcb-gl-integration;platformthemes/libqt6ct.so"|export EXTRA_QT_PLUGINS="svg;wayland-decoration-client;wayland-graphics-integration-client;wayland-shell-integration;waylandcompositor;xcb-gl-integration;platformthemes/libqt5ct.so"|g' appimage-builder.sh
-                sed -i 's|export QMAKE="/usr/bin/qmake6"|export QMAKE="/usr/bin/qmake5"|g' appimage-builder.sh
-                sed -i 's|export QT_SELECT=6|export QT_SELECT=5|g' appimage-builder.sh
-                chmod +x appimage-builder.sh && ./appimage-builder.sh torzu build && echo "appimage builded correctly" || echo "error building appimage"
-                mv build/deploy-linux/torzu*-x86_64.AppImage ~/
+                mv bin/yuzu ~/torzu-x86_64
                 ;;
         esac
         ;;
