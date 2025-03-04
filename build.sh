@@ -129,8 +129,8 @@ case "$emu_platform" in
                 echo "1) Release"
                 echo "2) Steamdeck"
                 echo "3) Debug"
-                read -rp "Choose an option [1-4]: " emu_build_mode
-                if [ "$emu_build_mode" != "1" ] && [ "$emu_build_mode" != "2" ] && [ "$emu_build_mode" != "3" ] && [ "$emu_build_mode" != "4" ]; then
+                read -rp "Choose an option [1-3]: " emu_build_mode
+                if [ "$emu_build_mode" != "1" ] && [ "$emu_build_mode" != "2" ] && [ "$emu_build_mode" != "3" ]; then
                     echo "Invalid option"
                     cd ~/ && rm -rf "$emu_directory"
                     exit 1
