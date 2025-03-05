@@ -45,9 +45,9 @@ case "$emu_platform" in
                 rm -rf citron-nightly-*-x86_64.AppImage
                 ;;
             2)
-                echo "Installing qt5..."
-                sudo pacman -Syu --needed --noconfirm qt5 && echo "qt5 installed correctly" || echo "error installing qt5"
-                rm -rf torzu-x86_64
+                echo "Installing qt5 and fuse2..."
+                sudo pacman -Syu --needed --noconfirm qt5 fuse2 && echo "qt5 and fuse2 installed correctly" || echo "error installing qt5 and fuse2"
+                rm -rf torzu.AppImage
                 ;;
         esac
         cd "$emu_directory"
@@ -111,7 +111,6 @@ case "$emu_platform" in
                         ;;
                     4)
                         cmake .. -GNinja \
-                            -DCMAKE_BUILD_TYPE=Debug \
                             -DCITRON_ENABLE_LTO=ON \
                             -DCITRON_USE_BUNDLED_VCPKG=ON \
                             -DCITRON_TESTS=OFF \
@@ -120,7 +119,8 @@ case "$emu_platform" in
                             -DCMAKE_CXX_FLAGS="-march=native -mtune=native -Wno-error" \
                             -DCMAKE_C_FLAGS="-march=native -mtune=native" \
                             -DUSE_DISCORD_PRESENCE=OFF \
-                            -DBUNDLE_SPEEX=ON && echo "cmake builded correctly" || echo "error building cmake"
+                            -DBUNDLE_SPEEX=ON \
+                            -DCMAKE_BUILD_TYPE=Debug && echo "cmake builded correctly" || echo "error building cmake"
                         ;;
                 esac
                 ;;
@@ -137,13 +137,45 @@ case "$emu_platform" in
                 fi
                 case "$emu_build_mode" in
                     1)
-                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || echo "error building cmake"
+                        cmake .. -GNinja \
+                            -DYUZU_USE_BUNDLED_VCPKG=ON \
+                            -DYUZU_TESTS=OFF \
+                            -DYUZU_USE_LLVM_DEMANGLE=OFF \
+                            -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
+                            -DCMAKE_INSTALL_PREFIX=/usr \
+                            -DCMAKE_CXX_FLAGS="-march=native -mtune=native -Wno-error" \
+                            -DCMAKE_C_FLAGS="-march=native -mtune=native" \
+                            -DUSE_DISCORD_PRESENCE=OFF \
+                            -DBUNDLE_SPEEX=ON \
+                            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || echo "error building cmake"
                         ;;
                     2)
-                        cmake .. -GNinja -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF -DYUZU_USE_LLVM_DEMANGLE=OFF && echo "cmake builded correctly" || echo "error building cmake"
+                        cmake .. -GNinja \
+                            -DYUZU_USE_BUNDLED_VCPKG=ON \
+                            -DYUZU_TESTS=OFF \
+                            -DYUZU_USE_LLVM_DEMANGLE=OFF \
+                            -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
+                            -DCMAKE_INSTALL_PREFIX=/usr \
+                            -DCMAKE_CXX_FLAGS="-march=znver2 -mtune=znver2 -Wno-error" \
+                            -DCMAKE_C_FLAGS="-march=znver2 -mtune=znver2" \
+                            -DUSE_DISCORD_PRESENCE=OFF \
+                            -DBUNDLE_SPEEX=ON \
+                            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || echo "error building cmake"
                         ;;
                     3)
-                        cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug -DYUZU_USE_BUNDLED_VCPKG=ON -DYUZU_TESTS=OFF && echo "cmake builded correctly" || echo "error building cmake"
+                        cmake .. -GNinja \
+                            -DYUZU_USE_BUNDLED_VCPKG=ON \
+                            -DYUZU_TESTS=OFF \
+                            -DYUZU_USE_LLVM_DEMANGLE=OFF \
+                            -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
+                            -DCMAKE_INSTALL_PREFIX=/usr \
+                            -DCMAKE_CXX_FLAGS="-march=native -mtune=native -Wno-error" \
+                            -DCMAKE_C_FLAGS="-march=native -mtune=native" \
+                            -DUSE_DISCORD_PRESENCE=OFF \
+                            -DBUNDLE_SPEEX=ON \
+                            -DCMAKE_BUILD_TYPE=Debug && echo "cmake builded correctly" || echo "error building cmake"
                         ;;
                 esac
                 ;;
@@ -158,7 +190,9 @@ case "$emu_platform" in
                 mv build/deploy-linux/citron-nightly-*-x86_64.AppImage ~/
                 ;;
             2)
-                mv bin/yuzu ~/torzu-x86_64
+                cd .. && ./AppImage-build.sh && echo "appimage builded correctly" || "error building appimage"
+                chmod +x torzu.AppImage && echo "permissions updated correctly" || echo "error updating permissions"
+                mv torzu.AppImage ~/
                 ;;
         esac
         ;;
