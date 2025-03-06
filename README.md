@@ -15,7 +15,7 @@ sudo pacman -Syu qemu-base
 ```bash
 qemu-system-x86_64 -smp 4 -m 8G -hda hda.qcow2 -nic user,hostfwd=tcp::22-:22 -nographic
 ```
-You can change amount of cores and ram editing -smp and -m params, if you are on X86_64 system, you can use -enable-kvm
+You can change amount of cores and ram editing `-smp` and `-m` params, if you are on X86_64 system, you can use `-enable-kvm`
 
 5) Open new terminal and ssh into vm with
 ```bash
