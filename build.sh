@@ -127,11 +127,9 @@ case "$emu_platform" in
             2)
                 echo "Select build mode:"
                 echo "1) Release"
-                echo "2) Steamdeck"
-                echo "3) Compatibility"
-                echo "4) Debug"
+                echo "2) Debug"
                 read -rp "Choose an option [1-4]: " emu_build_mode
-                if [ "$emu_build_mode" != "1" ] && [ "$emu_build_mode" != "2" ] && [ "$emu_build_mode" != "3" ] && [ "$emu_build_mode" != "4" ]; then
+                if [ "$emu_build_mode" != "1" ] && [ "$emu_build_mode" != "2" ]; then
                     echo "Invalid option"
                     cd ~/ && rm -rf "$emu_directory"
                     exit 1
@@ -152,34 +150,6 @@ case "$emu_platform" in
                             -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || echo "error building cmake"
                         ;;
                     2)
-                        cmake .. -GNinja \
-                            -DYUZU_USE_BUNDLED_VCPKG=ON \
-                            -DYUZU_TESTS=OFF \
-                            -DYUZU_USE_LLVM_DEMANGLE=OFF \
-                            -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
-                            -DCMAKE_INSTALL_PREFIX=/usr \
-                            -DCMAKE_CXX_FLAGS="-march=znver2 -mtune=znver2 -Wno-error" \
-                            -DCMAKE_C_FLAGS="-march=znver2 -mtune=znver2" \
-                            -DUSE_DISCORD_PRESENCE=OFF \
-                            -DBUNDLE_SPEEX=ON \
-                            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || echo "error building cmake"
-                        ;;
-                    3)
-                        cmake .. -GNinja \
-                            -DYUZU_USE_BUNDLED_VCPKG=ON \
-                            -DYUZU_TESTS=OFF \
-                            -DYUZU_USE_LLVM_DEMANGLE=OFF \
-                            -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
-                            -DCMAKE_INSTALL_PREFIX=/usr \
-                            -DCMAKE_CXX_FLAGS="-march=core2 -mtune=core2 -Wno-error" \
-                            -DCMAKE_C_FLAGS="-march=core2 -mtune=core2" \
-                            -DUSE_DISCORD_PRESENCE=OFF \
-                            -DBUNDLE_SPEEX=ON \
-                            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-                            -DCMAKE_BUILD_TYPE=Release && echo "cmake builded correctly" || echo "error building cmake"
-                        ;;
-                    4)
                         cmake .. -GNinja \
                             -DYUZU_USE_BUNDLED_VCPKG=ON \
                             -DYUZU_TESTS=OFF \
