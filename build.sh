@@ -223,7 +223,7 @@ case "$emu_platform" in
                 ;;
         esac
         wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz -O OpenJDK.tar.gz && echo "OpenJDK downloaded correctly" || echo "error downloading OpenJDK"
-        tar xzf OpenJDK.tar.gz && echo "OpenJDK extracted correctly" || { echo "error extracting OpenJDK"; rm -rf "$emu_directory"; exit 1; }
+        tar xzf OpenJDK.tar.gz && echo "OpenJDK extracted correctly" || echo "error extracting OpenJDK"
         rm OpenJDK.tar.gz
         wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O commandlinetools.zip && echo "Android SDK downloaded correctly" || echo "error downloading Android SDK"
         mkdir -p ~/Android/Sdk/cmdline-tools
