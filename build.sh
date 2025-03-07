@@ -182,8 +182,8 @@ case "$emu_platform" in
         esac
         ;;
     2)
-        echo "Installing wget..."
-        sudo pacman -Syu --needed --noconfirm wget && echo "wget installed correctly" || echo "error installing wget"
+        echo "Installing wget and vulkan-headers..."
+        sudo pacman -Syu --needed --noconfirm wget vulkan-headers && echo "wget and vulkan-headers installed correctly" || echo "error installing wget and vulkan-headers"
         case "$emu_version" in
             1)
                 rm -rf Citron-*-mainlineRelease.apk
