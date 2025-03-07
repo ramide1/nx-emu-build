@@ -45,8 +45,8 @@ case "$emu_platform" in
                 rm -rf citron-nightly-*-x86_64.AppImage
                 ;;
             2)
-                echo "Installing qt5 and fuse2..."
-                sudo pacman -Syu --needed --noconfirm qt5 fuse2 && echo "qt5 and fuse2 installed correctly" || echo "error installing qt5 and fuse2"
+                echo "Installing qt5 fuse2 and wget..."
+                sudo pacman -Syu --needed --noconfirm qt5 fuse2 wget && echo "qt5 fuse2 and wget installed correctly" || echo "error installing qt5 fuse2 and wget"
                 rm -rf torzu.AppImage
                 ;;
         esac
