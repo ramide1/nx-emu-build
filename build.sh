@@ -2,7 +2,7 @@
 
 rm ~/x
 echo "Installing deps..."
-sudo pacman -Syu --needed --noconfirm base-devel boost catch2 cmake ffmpeg fmt git glslang libzip lz4 mbedtls ninja nlohmann-json openssl opus sdl2 zlib zstd zip unzip && echo "deps installed correctly" || echo "error installing deps"
+sudo pacman -Syu --needed --noconfirm base-devel cmake git glslang libzip mbedtls ninja zip unzip && echo "deps installed correctly" || echo "error installing deps"
 echo "Select emu:"
 echo "1) Citron"
 echo "2) Torzu"
@@ -138,6 +138,7 @@ case "$emu_platform" in
                     1)
                         cmake .. -GNinja \
                             -DYUZU_USE_BUNDLED_VCPKG=ON \
+                            -DYUZU_USE_EXTERNAL_SDL2=ON \
                             -DYUZU_TESTS=OFF \
                             -DYUZU_USE_LLVM_DEMANGLE=OFF \
                             -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
@@ -152,6 +153,7 @@ case "$emu_platform" in
                     2)
                         cmake .. -GNinja \
                             -DYUZU_USE_BUNDLED_VCPKG=ON \
+                            -DYUZU_USE_EXTERNAL_SDL2=ON \
                             -DYUZU_TESTS=OFF \
                             -DYUZU_USE_LLVM_DEMANGLE=OFF \
                             -DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS=ON \
