@@ -1,0 +1,6 @@
+FROM ghcr.io/fwcd/archlinux
+RUN pacman -Syu --needed --noconfirm base-devel cmake git glslang libzip mbedtls ninja zip unzip qt5 sdl3 wget fuse2
+WORKDIR /root
+RUN mkdir -p outputs
+COPY torzu_linux.sh build.sh
+ENTRYPOINT ["/root/build.sh"]

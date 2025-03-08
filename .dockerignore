@@ -1,0 +1,8 @@
+.git
+.gitignore
+build.sh
+Dockerfile*
+.env
+outputs
+LICENSE
+README.md
