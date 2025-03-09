@@ -34,12 +34,6 @@ case "$emu_platform" in
 esac
 echo "⚒️Building Image...⚒️"
 image_version="$emu_version"_"$emu_platform"
-if [[ $(uname -s) == "Darwin" && $(uname -m) == "arm64" ]]; then
-    softwareupdate --install-rosetta
-    docker build --platform=linux/amd64 -t ramide1/nx-emu-build:$image_version -f Dockerfile_$image_version .
-    docker run --platform=linux/amd64 --rm -it -v ./outputs:/root/outputs ramide1/nx-emu-build:$image_version
-else
-    docker build -t ramide1/nx-emu-build:$image_version -f Dockerfile_$image_version .
-    docker run --rm -it -v ./outputs:/root/outputs ramide1/nx-emu-build:$image_version
-fi
+docker build -t ramide1/nx-emu-build:$image_version -f Dockerfile_$image_version .
+docker run --rm -it -v ./outputs:/root/outputs ramide1/nx-emu-build:$image_version
 docker rmi ramide1/nx-emu-build:$image_version
