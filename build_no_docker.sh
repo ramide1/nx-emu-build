@@ -118,9 +118,17 @@ case "$emu_platform" in
         COMM_HASH=$(git rev-parse --short=9 HEAD)
         BUILD_DATE=$(date +"%Y%m%d")
         APPIMAGE_NAME="$emu_version-nightly-$BUILD_DATE-$COMM_COUNT-$COMM_HASH-x86_64.AppImage"
-        LATEST_APPIMAGE=$(ls -1t "$emu_version"*.AppImage | head -n 1)
+        case "$emu_version" in
+            Citron)
+                LATEST_APPIMAGE=$(ls -1t citron*.AppImage | head -n 1)
+                ;;
+            Torzu)
+                LATEST_APPIMAGE=$(ls -1t torzu*.AppImage | head -n 1)
+                ;;
+        esac
         if [[ -z "${LATEST_APPIMAGE}" ]]; then
-            >&2 echo "Error: No AppImage found for $emu_version"
+            echo "Error: No AppImage found for $emu_version"
+            cd "$WORKING_DIR" && rm -rf "$emu_version"
             exit 1
         fi
         mv -v "$LATEST_APPIMAGE" "$APPIMAGE_NAME"
