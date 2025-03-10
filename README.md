@@ -22,7 +22,7 @@ git clone https://github.com/ramide1/nx-emu-build.git && cd nx-emu-build
 ls outputs
 ```
 
-## Instructions without Docker:
+## Instructions without Docker (for any no x86_64 device with vm):
 1) Download arch linux vm image from https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-basic.qcow2
 
 2) Rename to hda.qcow2

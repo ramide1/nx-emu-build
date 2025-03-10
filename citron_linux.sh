@@ -11,11 +11,8 @@ cmake .. -GNinja \
     -DCITRON_TESTS=OFF \
     -DCITRON_USE_LLVM_DEMANGLE=OFF \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_CXX_FLAGS="-march=native -mtune=native -Wno-error" \
-    -DCMAKE_C_FLAGS="-march=native -mtune=native" \
     -DUSE_DISCORD_PRESENCE=OFF \
     -DBUNDLE_SPEEX=ON \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DCMAKE_BUILD_TYPE=Release && echo "✔️⚒️Cmake builded correctly⚒️✔️" || echo "❌⚒️Error building cmake⚒️❌"
 echo "⚒️Building bin...⚒️"
 ninja && echo "✔️⚒️Bin builded correctly⚒️✔️" || echo "❌⚒️Error building bin⚒️❌"
