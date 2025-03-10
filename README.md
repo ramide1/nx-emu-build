@@ -46,7 +46,7 @@ Use arch as password
 
 6) Run this command in vm to build appimage or apk
 ```bash
-curl -O https://raw.githubusercontent.com/ramide1/nx-emu-build/main/build_no_docker.sh && ./build_no_docker.sh
+curl -s -O https://raw.githubusercontent.com/ramide1/nx-emu-build/main/build_no_docker.sh && chmod +x build_no_docker.sh && ./build_no_docker.sh
 ```
 
 7) Run this command to view generated file
