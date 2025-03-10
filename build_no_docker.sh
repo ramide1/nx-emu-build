@@ -17,6 +17,7 @@ if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
     echo "Invalid option"
     exit 1
 fi
+WORKING_DIR=$(realpath .)
 echo "⬇️Installing deps...⬇️"
 sudo pacman -Syu --needed --noconfirm base-devel cmake git glslang libzip mbedtls ninja zip unzip && echo "✔️⬇️Deps installed correctly⬇️✔️" || echo "❌⬇️Error installing deps⬇️❌"
 case "$emu_version" in
@@ -31,7 +32,7 @@ case "$emu_version" in
         git clone --depth 1 https://notabug.org/litucks/torzu.git "$emu_version" && echo "✔️💾$emu_version cloned correctly💾✔️" || echo "❌💾Error cloning $emu_version💾❌"
         cd "$emu_version"
         git submodule update --init --recursive && echo "✔️⬇️Submodules updated correctly⬇️✔️" || echo "❌⬇️Error updating submodules⬇️❌"
-        cd ..
+        cd "$WORKING_DIR"
         ;;
 esac
 case "$emu_platform" in
@@ -128,38 +129,35 @@ case "$emu_platform" in
         echo "$APPIMAGE_NAME"
         echo "${SHA256SUM};${FILESIZE}B"
         chmod +x "$APPIMAGE_NAME" && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
-        mv "$APPIMAGE_NAME" ../../../
-        cd ../../../
+        mv "$APPIMAGE_NAME" "$WORKING_DIR"
         ;;
     2)
-        echo "Installing wget and vulkan-headers..."
-        sudo pacman -Syu --needed --noconfirm wget vulkan-headers && echo "wget and vulkan-headers installed correctly" || echo "error installing wget and vulkan-headers"
+        echo "⬇️Installing wget and vulkan-headers...⬇️"
+        sudo pacman -Syu --needed --noconfirm wget vulkan-headers && echo "✔️⬇️Wget and vulkan-headers installed correctly⬇️✔️" || echo "❌⬇️Error installing wget and vulkan-headers⬇️❌"
         rm -rf "$emu_version-mainlineRelease.apk"
-        wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz -O OpenJDK.tar.gz && echo "OpenJDK downloaded correctly" || echo "error downloading OpenJDK"
-        tar xzf OpenJDK.tar.gz && echo "OpenJDK extracted correctly" || echo "error extracting OpenJDK"
+        wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz -O OpenJDK.tar.gz && echo "✔️⬇️OpenJDK downloaded correctly⬇️✔️" || echo "❌⬇️Error downloading OpenJDK⬇️❌"
+        tar xzf OpenJDK.tar.gz && echo "✔️OpenJDK extracted correctly✔️" || echo "❌Error extracting OpenJDK❌"
         rm OpenJDK.tar.gz
-        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O commandlinetools.zip && echo "Android SDK downloaded correctly" || echo "error downloading Android SDK"
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O commandlinetools.zip && echo "✔️⬇️Android SDK downloaded correctly⬇️✔️" || echo "❌⬇️Error downloading Android SDK⬇️❌"
         mkdir -p Android/Sdk/cmdline-tools
-        unzip commandlinetools.zip -d Android/Sdk/cmdline-tools && echo "Android SDK extracted correctly" || echo "error extracting Android SDK"
+        unzip commandlinetools.zip -d Android/Sdk/cmdline-tools && echo "✔️Android SDK extracted correctly✔️" || echo "❌Error extracting Android SDK❌"
         rm commandlinetools.zip
         mv Android/Sdk/cmdline-tools/cmdline-tools Android/Sdk/cmdline-tools/latest
-        BUILD_DIR=$(realpath .)
-        export JAVA_HOME="$BUILD_DIR"/jdk-21.0.6+7
+        export JAVA_HOME="$WORKING_DIR"/jdk-21.0.6+7
         export PATH=$PATH:$JAVA_HOME/bin
-        export ANDROID_SDK_ROOT="$BUILD_DIR"/Android/Sdk
+        export ANDROID_SDK_ROOT="$WORKING_DIR"/Android/Sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
         export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
         if [ "$emu_version" == "Citron" ]; then
             sed -i 's|set(VCPKG_HOST_TRIPLET "x64-windows")|set(VCPKG_HOST_TRIPLET "x64-linux")|g' "$emu_version/CMakeLists.txt"
         fi
         cd "$emu_version/src/android"
-        echo "Building apk..."
+        echo "⚒️Building apk...⚒️"
         yes | sdkmanager --licenses
-        ./gradlew assembleRelease && echo "apk builded correctly" || echo "error building apk"
-        rm -rf "$BUILD_DIR/Android"
-        rm -rf "$BUILD_DIR/jdk-21.0.6+7"
-        mv app/build/outputs/apk/mainline/release/*.apk "$BUILD_DIR/$emu_version-mainlineRelease.apk"
-        cd "$BUILD_DIR"
+        ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
+        rm -rf "$WORKING_DIR/Android"
+        rm -rf "$WORKING_DIR/jdk-21.0.6+7"
+        mv app/build/outputs/apk/mainline/release/*.apk "$WORKING_DIR/$emu_version-mainlineRelease.apk"
         ;;
 esac
-rm -rf "$emu_version"
+cd "$WORKING_DIR" && rm -rf "$emu_version"
