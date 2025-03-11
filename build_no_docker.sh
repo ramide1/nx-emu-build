@@ -43,8 +43,8 @@ case "$emu_platform" in
                 sudo pacman -Syu --needed --noconfirm qt6 sdl3 && echo "✔️⬇️Qt6 and sdl3 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt6 and sdl3⬇️❌"
                 ;;
             Torzu)
-                echo "⬇️Installing qt5 sdl3 and gst-plugins-bad...⬇️"
-                sudo pacman -Syu --needed --noconfirm qt5 sdl3 gst-plugins-bad && echo "✔️⬇️Qt5 sdl3 and gst-plugins-bad installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 sdl3 and gst-plugins-bad⬇️❌"
+                echo "⬇️Installing qt5 and sdl3...⬇️"
+                sudo pacman -Syu --needed --noconfirm qt5 sdl3 && echo "✔️⬇️Qt5 and sdl3 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 and sdl3⬇️❌"
                 ;;
         esac
         rm -rf "$emu_version"-nightly-*-x86_64.AppImage
@@ -105,6 +105,7 @@ case "$emu_platform" in
                 export EXTRA_QT_PLUGINS="svg;wayland-decoration-client;wayland-graphics-integration-client;wayland-shell-integration;waylandcompositor;xcb-gl-integration;platformthemes/libqt5ct.so"
                 export QMAKE="/usr/bin/qmake"
                 export QT_SELECT=5
+                cp "$WORKING_DIR/$emu_version"/AppImageBuilder/assets/* ./AppDir
                 ;;
         esac
         NO_STRIP=1 APPIMAGE_EXTRACT_AND_RUN=1 ./linuxdeploy --appdir ./AppDir --plugin qt --plugin checkrt

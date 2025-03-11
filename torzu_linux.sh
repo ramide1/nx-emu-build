@@ -1,5 +1,6 @@
 #!/bin/bash
 
+WORKING_DIR=$(realpath .)
 echo "💾Cloning Torzu...💾"
 git clone --depth 1 https://notabug.org/litucks/torzu.git && echo "✔️💾Torzu cloned correctly💾✔️" || echo "❌💾Error cloning Torzu💾❌"
 cd torzu
@@ -38,6 +39,7 @@ export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so;libqxcb
 export EXTRA_QT_PLUGINS="svg;wayland-decoration-client;wayland-graphics-integration-client;wayland-shell-integration;waylandcompositor;xcb-gl-integration;platformthemes/libqt5ct.so"
 export QMAKE="/usr/bin/qmake"
 export QT_SELECT=5
+cp "$WORKING_DIR"/torzu/AppImageBuilder/assets/* ./AppDir
 NO_STRIP=1 APPIMAGE_EXTRACT_AND_RUN=1 ./linuxdeploy --appdir ./AppDir --plugin qt --plugin checkrt
 rm -fv ./AppDir/usr/lib/libwayland-client.so*
 rm -fv ./AppDir/usr/lib/libvulkan.so*
