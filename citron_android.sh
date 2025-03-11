@@ -6,4 +6,4 @@ sed -i 's|set(VCPKG_HOST_TRIPLET "x64-windows")|set(VCPKG_HOST_TRIPLET "x64-linu
 cd Citron/src/android
 echo "⚒️Building apk...⚒️"
 ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
-mv app/build/outputs/apk/mainline/release/Citron-*-mainlineRelease.apk ../../../outputs
+mv app/build/outputs/apk/mainline/release/*.apk ../../../outputs/Citron-mainline-release.apk

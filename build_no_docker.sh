@@ -166,7 +166,7 @@ case "$emu_platform" in
         ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
         rm -rf "$WORKING_DIR/Android"
         rm -rf "$WORKING_DIR/jdk-21.0.6+7"
-        mv app/build/outputs/apk/mainline/release/*.apk "$WORKING_DIR/$emu_version-mainlineRelease.apk"
+        mv app/build/outputs/apk/mainline/release/*.apk "$WORKING_DIR/$emu_version-mainline-release.apk"
         ;;
 esac
 cd "$WORKING_DIR" && rm -rf "$emu_version"

@@ -7,4 +7,4 @@ git submodule update --init --recursive && echo "✔️⬇️Submodules updated 
 cd src/android
 echo "⚒️Building apk...⚒️"
 ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
-mv app/build/outputs/apk/mainline/release/app-mainline-release.apk ../../../outputs
+mv app/build/outputs/apk/mainline/release/*.apk ../../../outputs/Torzu-mainline-release.apk

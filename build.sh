@@ -3,25 +3,34 @@
 echo "Select emu:"
 echo "1) Citron"
 echo "2) Torzu"
-read -rp "Choose an option [1-2]: " emu_version
-if [ "$emu_version" != "1" ] && [ "$emu_version" != "2" ]; then
+echo "3) Strato"
+read -rp "Choose an option [1-3]: " emu_version
+if [ "$emu_version" != "1" ] && [ "$emu_version" != "2" ] && [ "$emu_version" != "3" ]; then
     echo "Invalid option"
     exit 1
 fi
-echo "Select platform:"
-echo "1) Linux 💻"
-echo "2) Android 📱"
-read -rp "Choose an option [1-2]: " emu_platform
-if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
-    echo "Invalid option"
-    exit 1
+if [ "$emu_version" != "3" ]; then
+    echo "Select platform:"
+    echo "1) Linux 💻"
+    echo "2) Android 📱"
+    read -rp "Choose an option [1-2]: " emu_platform
+    if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
+        echo "Invalid option"
+        exit 1
+    fi
+else
+	$emu_platform="2"
 fi
+
 case "$emu_version" in
     1)
         emu_version="citron"
         ;;
     2)
         emu_version="torzu"
+        ;;
+    3)
+        emu_version="strato"
         ;;
 esac
 case "$emu_platform" in
