@@ -43,8 +43,8 @@ case "$emu_platform" in
                 sudo pacman -Syu --needed --noconfirm qt6 sdl3 && echo "✔️⬇️Qt6 and sdl3 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt6 and sdl3⬇️❌"
                 ;;
             Torzu)
-                echo "⬇️Installing qt5 and sdl3...⬇️"
-                sudo pacman -Syu --needed --noconfirm qt5 sdl3 && echo "✔️⬇️Qt5 and sdl3 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 and sdl3⬇️❌"
+                echo "⬇️Installing qt5 sdl3 and gst-plugins-bad...⬇️"
+                sudo pacman -Syu --needed --noconfirm qt5 sdl3 gst-plugins-bad && echo "✔️⬇️Qt5 sdl3 and gst-plugins-bad installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 sdl3 and gst-plugins-bad⬇️❌"
                 ;;
         esac
         rm -rf "$emu_version"-nightly-*-x86_64.AppImage
