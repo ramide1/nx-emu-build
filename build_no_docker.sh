@@ -127,7 +127,7 @@ case "$emu_platform" in
                 ;;
         esac
         if [[ -z "${LATEST_APPIMAGE}" ]]; then
-            echo "Error: No AppImage found for $emu_version"
+            echo "❌Error: No AppImage found for $emu_version❌"
             cd "$WORKING_DIR" && rm -rf "$emu_version"
             exit 1
         fi

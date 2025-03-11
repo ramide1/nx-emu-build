@@ -47,10 +47,10 @@ mv -v ./squashfs-root/ ./linuxdeploy-squashfs-root/
 COMM_COUNT=$(git rev-list --count HEAD)
 COMM_HASH=$(git rev-parse --short=9 HEAD)
 BUILD_DATE=$(date +"%Y%m%d")
-APPIMAGE_NAME="citron-nightly-$BUILD_DATE-$COMM_COUNT-$COMM_HASH-x86_64.AppImage"
+APPIMAGE_NAME="Citron-nightly-$BUILD_DATE-$COMM_COUNT-$COMM_HASH-x86_64.AppImage"
 LATEST_APPIMAGE=$(ls -1t citron*.AppImage | head -n 1)
 if [[ -z "${LATEST_APPIMAGE}" ]]; then
-    >&2 echo "Error: No AppImage found for citron"
+    echo "❌Error: No AppImage found for Citron❌"
     exit 1
 fi
 mv -v "$LATEST_APPIMAGE" "$APPIMAGE_NAME"

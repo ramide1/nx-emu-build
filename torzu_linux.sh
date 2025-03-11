@@ -48,10 +48,10 @@ mv -v ./squashfs-root/ ./linuxdeploy-squashfs-root/
 COMM_COUNT=$(git rev-list --count HEAD)
 COMM_HASH=$(git rev-parse --short=9 HEAD)
 BUILD_DATE=$(date +"%Y%m%d")
-APPIMAGE_NAME="torzu-nightly-$BUILD_DATE-$COMM_COUNT-$COMM_HASH-x86_64.AppImage"
+APPIMAGE_NAME="Torzu-nightly-$BUILD_DATE-$COMM_COUNT-$COMM_HASH-x86_64.AppImage"
 LATEST_APPIMAGE=$(ls -1t torzu*.AppImage | head -n 1)
 if [[ -z "${LATEST_APPIMAGE}" ]]; then
-    >&2 echo "Error: No AppImage found for torzu"
+    echo "❌Error: No AppImage found for Torzu❌"
     exit 1
 fi
 mv -v "$LATEST_APPIMAGE" "$APPIMAGE_NAME"

@@ -8,14 +8,6 @@ if [ "$emu_version" != "1" ] && [ "$emu_version" != "2" ]; then
     echo "Invalid option"
     exit 1
 fi
-case "$emu_version" in
-    1)
-        emu_version="citron"
-        ;;
-    2)
-        emu_version="torzu"
-        ;;
-esac
 echo "Select platform:"
 echo "1) Linux 💻"
 echo "2) Android 📱"
@@ -24,6 +16,14 @@ if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
     echo "Invalid option"
     exit 1
 fi
+case "$emu_version" in
+    1)
+        emu_version="citron"
+        ;;
+    2)
+        emu_version="torzu"
+        ;;
+esac
 case "$emu_platform" in
     1)
         emu_platform="linux"
