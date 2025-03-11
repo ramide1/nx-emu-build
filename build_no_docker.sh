@@ -4,18 +4,23 @@ rm build_no_docker.sh
 echo "Select emu:"
 echo "1) Citron"
 echo "2) Torzu"
-read -rp "Choose an option [1-2]: " emu_version
-if [ "$emu_version" != "1" ] && [ "$emu_version" != "2" ]; then
+echo "3) Strato"
+read -rp "Choose an option [1-3]: " emu_version
+if [ "$emu_version" != "1" ] && [ "$emu_version" != "2" ] && [ "$emu_version" != "3" ]; then
     echo "Invalid option"
     exit 1
 fi
-echo "Select platform:"
-echo "1) Linux 💻"
-echo "2) Android 📱"
-read -rp "Choose an option [1-2]: " emu_platform
-if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
-    echo "Invalid option"
-    exit 1
+if [ "$emu_version" != "3" ]; then
+    echo "Select platform:"
+    echo "1) Linux 💻"
+    echo "2) Android 📱"
+    read -rp "Choose an option [1-2]: " emu_platform
+    if [ "$emu_platform" != "1" ] && [ "$emu_platform" != "2" ]; then
+        echo "Invalid option"
+        exit 1
+    fi
+else
+	$emu_platform="2"
 fi
 WORKING_DIR=$(realpath .)
 echo "⬇️Installing deps...⬇️"
@@ -33,6 +38,11 @@ case "$emu_version" in
         cd "$emu_version"
         git submodule update --init --recursive && echo "✔️⬇️Submodules updated correctly⬇️✔️" || echo "❌⬇️Error updating submodules⬇️❌"
         cd "$WORKING_DIR"
+        ;;
+    3)
+        emu_version="Strato"
+        echo "💾Cloning $emu_version...💾"
+        git clone --recursive -b jit https://github.com/strato-emu/strato.git "$emu_version" && echo "✔️💾$emu_version cloned correctly💾✔️" || echo "❌💾Error cloning $emu_version💾❌"
         ;;
 esac
 case "$emu_platform" in
@@ -143,7 +153,7 @@ case "$emu_platform" in
     2)
         echo "⬇️Installing wget and vulkan-headers...⬇️"
         sudo pacman -Syu --needed --noconfirm wget vulkan-headers && echo "✔️⬇️Wget and vulkan-headers installed correctly⬇️✔️" || echo "❌⬇️Error installing wget and vulkan-headers⬇️❌"
-        rm -rf "$emu_version-mainlineRelease.apk"
+        rm -rf "$emu_version-mainline-release.apk"
         wget https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.6_7.tar.gz -O OpenJDK.tar.gz && echo "✔️⬇️OpenJDK downloaded correctly⬇️✔️" || echo "❌⬇️Error downloading OpenJDK⬇️❌"
         tar xzf OpenJDK.tar.gz && echo "✔️OpenJDK extracted correctly✔️" || echo "❌Error extracting OpenJDK❌"
         rm OpenJDK.tar.gz
@@ -160,10 +170,15 @@ case "$emu_platform" in
         if [ "$emu_version" == "Citron" ]; then
             sed -i 's|set(VCPKG_HOST_TRIPLET "x64-windows")|set(VCPKG_HOST_TRIPLET "x64-linux")|g' "$emu_version/CMakeLists.txt"
         fi
-        cd "$emu_version/src/android"
-        echo "⚒️Building apk...⚒️"
         yes | sdkmanager --licenses
-        ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
+        echo "⚒️Building apk...⚒️"
+        if [ "$emu_version" == "Strato" ]; then
+            cd "$emu_version"
+            ./gradlew assembleMainlineRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
+        else
+	        cd "$emu_version/src/android"
+            ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
+        fi
         rm -rf "$WORKING_DIR/Android"
         rm -rf "$WORKING_DIR/jdk-21.0.6+7"
         mv app/build/outputs/apk/mainline/release/*.apk "$WORKING_DIR/$emu_version-mainline-release.apk"
