@@ -20,8 +20,7 @@ echo "⚒️Building bin...⚒️"
 ninja && echo "✔️⚒️Bin builded correctly⚒️✔️" || echo "❌⚒️Error building bin⚒️❌"
 echo "⚒️Building appimage...⚒️"
 cd ..
-mkdir -p AppImageBuilder/build
-cp /usr/lib/libSDL3.so* ./AppImageBuilder/build/
+mkdir -p AppImageBuilder/build && cp /usr/lib/libSDL3.so* AppImageBuilder/build
 ./AppImage-build.sh && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
 chmod +x *.AppImage && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
 mv *.AppImage "$WORKING_DIR/outputs/torzu.AppImage"
