@@ -19,6 +19,6 @@ echo "⚒️Building bin...⚒️"
 ninja && echo "✔️⚒️Bin builded correctly⚒️✔️" || echo "❌⚒️Error building bin⚒️❌"
 echo "⚒️Building appimage...⚒️"
 mkdir -p deploy-linux/AppDir/usr/lib && cp /usr/lib/libSDL3.so* deploy-linux/AppDir/usr/lib
-cd .. && ./appimage-builder.sh citron build && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
+cd .. && sed -i 's|rm -rf "${DEPLOY_LINUX_APPDIR_FOLDER}"||g' appimage-builder.sh && ./appimage-builder.sh citron build && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
 chmod +x build/deploy-linux/*.AppImage && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
 mv build/deploy-linux/*.AppImage "$WORKING_DIR/outputs/citron.AppImage"

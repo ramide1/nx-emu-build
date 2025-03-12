@@ -91,14 +91,14 @@ case "$emu_platform" in
         case "$emu_version" in
             citron)
                 mkdir -p deploy-linux/AppDir/usr/lib && cp /usr/lib/libSDL3.so* deploy-linux/AppDir/usr/lib
-                cd .. && ./appimage-builder.sh citron build && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
+                cd .. && sed -i 's|rm -rf "${DEPLOY_LINUX_APPDIR_FOLDER}"||g' appimage-builder.sh && ./appimage-builder.sh citron build && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
                 chmod +x build/deploy-linux/*.AppImage && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
                 mv build/deploy-linux/*.AppImage "$WORKING_DIR/citron.AppImage"
                 ;;
             torzu)
                 cd ..
                 mkdir -p AppImageBuilder/build && cp /usr/lib/libSDL3.so* AppImageBuilder/build
-                ./AppImage-build.sh && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
+                sed -i 's|rm -rf build||g' AppImageBuilder/build.sh && ./AppImage-build.sh && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
                 chmod +x *.AppImage && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
                 mv *.AppImage "$WORKING_DIR/torzu.AppImage"
                 ;;
