@@ -19,7 +19,7 @@ if [ "$emu_version" != "3" ]; then
         exit 1
     fi
 else
-	$emu_platform="2"
+	emu_platform="2"
 fi
 
 case "$emu_version" in
