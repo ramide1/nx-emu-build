@@ -53,8 +53,8 @@ case "$emu_platform" in
                 sudo pacman -Syu --needed --noconfirm qt6 sdl3 && echo "✔️⬇️Qt6 and sdl3 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt6 and sdl3⬇️❌"
                 ;;
             torzu)
-                echo "⬇️Installing qt5 sdl3 and fuse2...⬇️"
-                sudo pacman -Syu --needed --noconfirm qt5 sdl3 fuse2 && echo "✔️⬇️Qt5 sdl3 and fuse2 installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 sdl3 and fuse2⬇️❌"
+                echo "⬇️Installing qt5 sdl3 fuse2 and wget...⬇️"
+                sudo pacman -Syu --needed --noconfirm qt5 sdl3 fuse2 wget && echo "✔️⬇️Qt5 sdl3 fuse2 and wget installed correctly⬇️✔️" || echo "❌⬇️Error installing qt5 sdl3 fuse2 and wget⬇️❌"
                 ;;
         esac
         rm -rf "$emu_version.AppImage"
