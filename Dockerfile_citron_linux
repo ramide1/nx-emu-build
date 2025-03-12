@@ -1,5 +1,5 @@
-FROM ghcr.io/fwcd/archlinux
-RUN pacman -Syu --needed --noconfirm base-devel cmake git glslang libzip mbedtls ninja zip unzip qt6 sdl3 gst-plugins-bad
+FROM archlinux
+RUN pacman -Syu --needed --noconfirm base-devel cmake git glslang libzip mbedtls ninja zip unzip qt6 sdl3
 WORKDIR /root
 RUN mkdir -p outputs
 COPY citron_linux.sh build.sh

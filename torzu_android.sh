@@ -1,5 +1,6 @@
 #!/bin/bash
 
+WORKING_DIR=$(realpath .)
 echo "💾Cloning Torzu...💾"
 git clone --depth 1 https://notabug.org/litucks/torzu.git && echo "✔️💾Torzu cloned correctly💾✔️" || echo "❌💾Error cloning Torzu💾❌"
 cd torzu
@@ -7,4 +8,4 @@ git submodule update --init --recursive && echo "✔️⬇️Submodules updated 
 cd src/android
 echo "⚒️Building apk...⚒️"
 ./gradlew assembleRelease && echo "✔️⚒️Apk builded correctly⚒️✔️" || echo "❌⚒️Error building apk⚒️❌"
-mv app/build/outputs/apk/mainline/release/*.apk ../../../outputs/Torzu-mainline-release.apk
+mv app/build/outputs/apk/mainline/release/*.apk "$WORKING_DIR/outputs/torzu.apk"
