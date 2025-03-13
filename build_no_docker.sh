@@ -98,7 +98,7 @@ case "$emu_platform" in
             torzu)
                 cd ..
                 mkdir -p AppImageBuilder/build && cp /usr/lib/libSDL3.so* AppImageBuilder/build
-                sed -i 's|rm -rf build||g' AppImageBuilder/build.sh && ./AppImage-build.sh && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
+                sed -i 's|rm -rf build||g' AppImageBuilder/build.sh && sed -i 's|mkdir build||g' AppImageBuilder/build.sh && ./AppImage-build.sh && echo "✔️⚒️Appimage builded correctly⚒️✔️" || echo "❌⚒️Error building appimage⚒️❌"
                 chmod +x *.AppImage && echo "✔️Permissions updated correctly✔️" || echo "❌Error updating permissions❌"
                 mv *.AppImage "$WORKING_DIR/torzu.AppImage"
                 ;;
