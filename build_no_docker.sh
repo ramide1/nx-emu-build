@@ -121,9 +121,6 @@ case "$emu_platform" in
         export ANDROID_SDK_ROOT="$WORKING_DIR"/Android/Sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
         export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-        if [ "$emu_version" == "citron" ]; then
-            sed -i 's|set(VCPKG_HOST_TRIPLET "x64-windows")|set(VCPKG_HOST_TRIPLET "x64-linux")|g' "$emu_version/CMakeLists.txt"
-        fi
         yes | sdkmanager --licenses
         echo "⚒️Building apk...⚒️"
         if [ "$emu_version" == "strato" ]; then
